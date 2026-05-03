@@ -154,7 +154,8 @@
         resultEl.style.color = "#facc15";
         resultEl.style.fontSize = "32px";
         document.getElementById("rareMessage").style.display = "block";
-        
+        document.body.classList.remove("flash");
+        void document.body.offsetWidth
         document.body.classList.add("flash");
         setTimeout(() => {
           document.body.classList.remove("flash");
