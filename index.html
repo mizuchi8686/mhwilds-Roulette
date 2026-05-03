@@ -43,19 +43,19 @@
       padding: 0;
     }
     
-    .flash-container {
-      animation: flashCard 0.5s infinite;
+    .flash {
+      animation: flashBg 0.5s infinite;
     }
 
-    @keyframes flashCard {
+    @keyframes flashBg {
       0% {
-        box-shadow: 0 0 10px transparent;
+        background: linear-gradient(135deg, #334155, #64748b);
       }
       50% {
-        box-shadow: 0 0 30px gold;
+        background: linear-gradient(135deg, #facc15, #ef4444);
       }
       100% {
-        box-shadow: 0 0 10px transparent;
+        background: linear-gradient(135deg, #334155, #64748b);
       }
     }
     
@@ -154,7 +154,11 @@
         resultEl.style.color = "#facc15";
         resultEl.style.fontSize = "32px";
         document.getElementById("rareMessage").style.display = "block";
-        document.querySelector(".container").classList.add("flash-container");
+        
+        document.body.classList.add("flash");
+        setTimeout(() => {
+          document.body.classList.remove("flash");
+        }, 3000);
       } else {
         resultEl.style.color = "#86efac";
         resultEl.style.fontSize = "24px";
