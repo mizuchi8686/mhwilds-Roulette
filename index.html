@@ -154,9 +154,7 @@
         resultEl.style.color = "#facc15";
         resultEl.style.fontSize = "32px";
         document.getElementById("rareMessage").style.display = "block";
-        setTimeout(() => {
-          document.body.classList.remove("flash");
-        }, 3000);
+        document.querySelector(".container").classList.add("flash-container");
       } else {
         resultEl.style.color = "#86efac";
         resultEl.style.fontSize = "24px";
