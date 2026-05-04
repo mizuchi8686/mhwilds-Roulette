@@ -49,6 +49,7 @@
       padding: 12px 24px;
       border-radius: 14px;
       font-size: 16px;
+      width: 10em;
       cursor: pointer;
       margin: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -129,6 +130,7 @@
     }
     
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -159,6 +161,7 @@
       <!-- 2026.05.05 追加開始 -->
       <br>
       <button id="shareTxtBtn" onclick="shareResult()">テキスト共有</button>
+      <button id="imageShareBtn" onclick="shareImage()">画像共有</button>
       <!-- 2026.05.05 追加終了-->
     </div>
     
@@ -250,6 +253,7 @@
       if (rouletteInterval) return;
       document.getElementById("extraResult").textContent = "";
       document.getElementById("shareTxtBtn").disabled = true;
+      document.getElementById("imageShareBtn").disabled = true;
 
       rouletteInterval = setInterval(() => {
         const random = quests[Math.floor(Math.random() * quests.length)];
@@ -274,6 +278,7 @@
       
       document.getElementById("extraBtn").disabled = false;
       document.getElementById("shareTxtBtn").disabled = false;
+      document.getElementById("imageShareBtn").disabled = false;
 
       const resultEl = document.getElementById("result");
 
@@ -336,7 +341,7 @@
       const formattedDate =
         `${now.getFullYear()}/` +
         `${String(now.getMonth() + 1).padStart(2, "0")}/` +
-        `${String(now.getDate() + 1).padStart(2, "0")} ` +
+        `${String(now.getDate()).padStart(2, "0")} ` +
         `${String(now.getHours()).padStart(2, "0")}:` +
         `${String(now.getMinutes()).padStart(2, "0")}:` +
         `${String(now.getSeconds()).padStart(2, "0")}`;
@@ -373,9 +378,56 @@
         }
       } else {
         navigator.clipboard.writeText(shareText);
-        alert("共有非対応端末なのでコピーしたよ！");
+        alert("共有非対応端末なのでクリップボードにコピーしたよ！");
       }
     }
+    
+    async function shareImage() {
+      const result =
+        document.getElementById("result").textContent;
+
+      if (
+        result === "クエストを決めよう！" ||
+        result === "？？？"
+      ) {
+        alert("先にクエストを決めてね！");
+        return;
+      }
+
+      const target =
+        document.querySelector(".container");
+
+      try {
+        const canvas = await html2canvas(target, {
+          backgroundColor: "#1e293b",
+          scale: 2
+        });
+
+        canvas.toBlob(async (blob) => {
+          const file = new File(
+            [blob],
+            "mhwilds_result.png",
+            { type: "image/png" }
+          );
+
+          if (
+            navigator.canShare &&
+            navigator.canShare({ files: [file] })
+          ) {
+            await navigator.share({
+              title: "モンハンワイルズ結果",
+              files: [file]
+            });
+          } else {
+            alert("この端末は画像共有非対応だよ！");
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        alert("画像作成失敗！");
+      }
+    }
+    
     /* 2026.05.05 追加終了 */
     
   </script>
