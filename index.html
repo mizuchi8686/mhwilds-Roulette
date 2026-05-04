@@ -98,6 +98,13 @@
       }
     }
     
+    .highlight {
+      color: #facc15;
+      font-weight: bold;
+      font-size: 22px;
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
+    }
+    
   </style>
 </head>
 <body>
@@ -120,9 +127,11 @@
     </div>
 
     <p id="result">クエストを決めよう！</p>
+    <p id="extraResult" style="font-size:18px; color:#facc15; margin-top:10px;"></p>
     <div>
       <button onclick="startRoulette()">スタート</button>
       <button onclick="stopRoulette()">ストップ</button>
+      <button id="extraBtn" onclick="generateExtraMission()">＋α</button>
     </div>
     
     <h2>履歴</h2>
@@ -132,7 +141,7 @@
     const quests = [
       "歴戦王アルシュベルド",
       "★10 英雄の証", 
-      "☆9  ゴグマジオス", 
+      "☆9 ゴグマジオス", 
       "★10 ゴグマジオス", 
       "歴戦王ウズ・トゥナ",
       "歴戦王レ・ダウ",
@@ -157,8 +166,18 @@
       "おかわり", 
       "イャンクック"
     ];
+    const noCaptureMonsters = [
+      "★10 英雄の証",
+      "☆9 ゴグマジオス",
+      "★10 ゴグマジオス",
+      "歴戦王ジン・ダハド",
+      "零式オメガ", 
+      "ゾシア"
+    ];
 
     let history = [];
+    const weaponTypes = ["生産武器","アーティア武器"];
+    const missionTypes = ["討伐","捕獲"];
     let rouletteInterval = null;
 
     function updateHistory(selected) {
@@ -191,6 +210,8 @@
       rouletteInterval = null;
 
       const selected = document.getElementById("result").textContent;
+      document.getElementById("extraResult").textContent = "";
+      document.getElementById("extraBtn").disabled = false;
 
       const resultEl = document.getElementById("result");
 
@@ -212,6 +233,41 @@
       }
       updateHistory(selected);
     }
+    
+    function generateExtraMission() {
+      const selectedMonster =
+        document.getElementById("result").textContent;
+
+      if (
+        selectedMonster === "クエストを決めよう！" ||
+        selectedMonster === "？？？"
+      ) {
+        document.getElementById("extraResult").textContent =
+          "先にクエストを決めてね！";
+        return;
+      }
+
+      const weapon =
+        weaponTypes[Math.floor(Math.random() * weaponTypes.length)];
+
+      let mission;
+
+      if (noCaptureMonsters.includes(selectedMonster)) {
+        mission = "討伐";
+      } else {
+        mission =
+          missionTypes[Math.floor(Math.random() * missionTypes.length)];
+      }
+
+      document.getElementById("extraResult").innerHTML =
+        `${selectedMonster}を<br> 
+        <span class="highlight">${weapon}</span>
+        で 
+        <span class="highlight">${mission}</span>`;
+        
+        document.getElementById("extraBtn").disabled = true;
+    }
+    
   </script>
   </body>
 </html>
