@@ -7,42 +7,81 @@
   <style>
     body {
       font-family: 'DotGothic16', cursive;
-      background: linear-gradient(135deg, #334155, #64748b);
+      background: linear-gradient(-45deg, #1e293b, #334155, #475569, #64748b);
+      background-size: 400% 400%;
+      animation: bgMove 12s ease infinite;
+      min-height: 100vh;
       color: #86efac;
       text-align: center;
       padding: 30px;
     }
+    
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
     .container {
       max-width: 500px;
       margin: auto;
-      background: rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
       padding: 20px;
       border-radius: 20px;
     }
     button {
-      background: #dc2626;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
       color: white;
       border: none;
       padding: 12px 24px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 18px;
       cursor: pointer;
+      margin: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
     }
     button:hover {
       background: #b91c1c;
     }
     #result {
-      text-shadow: 2px 2px 8px rgba(255, 200, 0, 0.7);
-      font-size: 24px;
+      font-size: 28px;
       margin: 20px 0;
       color: #86efac;
       text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.25);
+      padding: 20px;
+      border-radius: 16px;
+      border: 2px solid rgba(134,239,172,0.3);
+      box-shadow: inset 0 0 12px rgba(134,239,172,0.2);
     }
     ul {
       list-style: none;
       padding: 0;
     }
-    
+    li {
+      background: rgba(255,255,255,0.08);
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 32px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.3);
+    }
+
+    h2 {
+      margin-top: 25px;
+      color: #facc15;
+    }
     .flash {
       animation: flashBg 0.5s infinite;
     }
@@ -64,8 +103,9 @@
 <body>
   <div class="container">
     <h1>⚔️ＭＨ：Ｗｉｌｄｓ⚔️
-        <br>🎲ランダムクエスト🎲
+        <br>🍺いつもの集会所🍸️
     </h1>
+    <h2>🎲ランダムクエスト🎲<h2>
 
     <div id="rareMessage" style="
       display:none;
@@ -111,6 +151,10 @@
       "チャタカブラ",
       "セルレギオス",
       "ヒラバミ",
+      "ラギアクルス", 
+      "ババコンガ", 
+      "ドドブランゴ", 
+      "おかわり", 
       "イャンクック"
     ];
 
