@@ -7,9 +7,17 @@
   <style>
     body {
       font-family: 'DotGothic16', cursive;
+      /* 
       background: linear-gradient(-45deg, #1e293b, #334155, #475569, #64748b);
       background-size: 400% 400%;
       animation: bgMove 12s ease infinite;
+      */
+      background-image: url('mhw_top.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
       min-height: 100vh;
       color: #86efac;
       text-align: center;
@@ -74,12 +82,12 @@
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 30px;
       text-shadow: 0 0 12px rgba(255,255,255,0.3);
     }
 
     h2 {
-      margin-top: 25px;
+      margin-top: 23px;
       color: #facc15;
     }
     .flash {
@@ -101,7 +109,7 @@
     .highlight {
       color: #facc15;
       font-weight: bold;
-      font-size: 22px;
+      font-size: 20px;
       text-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
     }
     
@@ -163,6 +171,11 @@
       "ラギアクルス", 
       "ババコンガ", 
       "ドドブランゴ", 
+      "ネルスキュラ", 
+      "赤いクモ", 
+      "グラビモス", 
+      "リオレウス", 
+      "リオレイア", 
       "おかわり", 
       "イャンクック"
     ];
@@ -176,7 +189,7 @@
     ];
 
     let history = [];
-    const weaponTypes = ["生産武器","アーティア武器"];
+    const weaponTypes = ["生産武器での",""];
     const missionTypes = ["討伐","捕獲"];
     let rouletteInterval = null;
 
@@ -260,9 +273,8 @@
       }
 
       document.getElementById("extraResult").innerHTML =
-        `${selectedMonster}を<br> 
+        `クエスト達成条件：<br>${selectedMonster}の<br> 
         <span class="highlight">${weapon}</span>
-        で 
         <span class="highlight">${mission}</span>`;
         
         document.getElementById("extraBtn").disabled = true;
