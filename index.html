@@ -33,7 +33,7 @@
     }
     
     .container {
-      max-width: 600px;
+      max-width: 500px;
       margin: auto;
       background: rgba(255,255,255,0.12);
       backdrop-filter: blur(12px);
@@ -42,16 +42,17 @@
       padding: 20px;
       border-radius: 20px;
     }
+    
     button {
       background: linear-gradient(135deg, #dc2626, #ef4444);
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 10px 24px;
       border-radius: 14px;
-      font-size: 16px;
-      width: 10em;
+      font-size: 14px;
       cursor: pointer;
-      margin: 8px;
+      margin: 5px 0;
+      white-space: nowrap;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -62,6 +63,28 @@
     button:hover {
       background: #b91c1c;
     }
+    
+    .button-row {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    .act-row {
+      justify-content: center;
+    }
+
+    .main-btn {
+      width: auto;
+    }
+
+    .extra-btn {
+      width: auto;
+      padding: 12px 18px;
+    }
+    
     #result {
       font-size: 18px;
       margin: 20px 0;
@@ -85,7 +108,7 @@
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 24px;
       text-shadow: 0 0 12px rgba(255,255,255,0.3);
     }
 
@@ -128,6 +151,7 @@
       75%  { transform: translate(-1px, -1px); }
       100% { transform: translate(0px, 0px); }
     }
+
     
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -153,17 +177,20 @@
 
     <p id="result">クエストを決めよう！</p>
     <p id="extraResult" style="font-size:20px; color:#facc15; margin-top:10px;"></p>
-    <div>
-      <button onclick="startRoulette()">スタート</button>
-      <button onclick="stopRoulette()">ストップ</button>
-      <br>
-      <button id="extraBtn" onclick="generateExtraMission()">＋α</button>
+    
+    <div class="button-row act-row">
+      <button class="main-btn" onclick="startRoulette()">スタート</button>
+      <button class="main-btn" onclick="stopRoulette()">ストップ</button>
+      <button class="extra-btn" id="extraBtn" onclick="generateExtraMission()">＋α</button>
+    </div>
       <!-- 2026.05.05 追加開始 -->
-      <br>
+    
+    <h2>共有</h2>
+    <div class="button-row">
       <button id="shareTxtBtn" onclick="shareResult()">テキスト共有</button>
       <button id="imageShareBtn" onclick="shareImage()">画像共有</button>
-      <!-- 2026.05.05 追加終了-->
     </div>
+      <!-- 2026.05.05 追加終了-->
     
     <h2>履歴</h2>
     <ul id="history"></ul>
