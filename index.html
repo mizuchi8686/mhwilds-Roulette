@@ -216,6 +216,20 @@
       text-align: center;
       margin-top: 15px;
     }
+    
+    .version-info {
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .help-msg {
+      font-size: 12px;
+      color: #86efac;
+      margin-top: 0;
+      text-align: center;
+    }
 
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -264,18 +278,26 @@
       <button class="main-btn" onclick="stopRoulette()">ストップ</button>
       <button class="extra-btn" id="extraBtn" onclick="generateExtraMission()">＋α</button>
     </div>
-      <!-- 2026.05.05 追加開始 -->
+    <!-- 2026.05.05 追加開始 -->
     
     <h2>共有</h2>
     <div class="button-row">
       <button id="shareTxtBtn" onclick="shareResult()">テキスト共有</button>
       <button id="imageShareBtn" onclick="shareImage()">画像共有</button>
     </div>
-      <!-- 2026.05.05 追加終了-->
+    <!-- 2026.05.05 追加終了-->
+      
+    <p class="help-msg">
+      ※ 画像共有を使う場合はブラウザアプリで開いてね
+    </p>
     
     <h2>履歴</h2>
     <ul id="history"></ul>
   </div>
+
+  <p class="version-info">
+    Monster Hunter Wilds. Random Quest @いつもの集会所 Ver 1.0.2
+  </p>
   
   <script>
     /* 2026.05.06 追加開始 外部読込み */
@@ -538,5 +560,6 @@
     loadQuests();
     
   </script>
+  
   </body>
 </html>
