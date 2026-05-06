@@ -203,6 +203,20 @@
       font-size: 20px;
     }
 
+    #monsterImage {
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    #monsterImageArea {
+      text-align: center;
+      margin-top: 15px;
+    }
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -238,6 +252,11 @@
     </div>
 
     <p id="result">クエストを決めよう！</p>
+    
+    <div id="monsterImageArea">
+      <img id="monsterImage" src="" alt="" style="display:none;">
+    </div>
+    
     <p id="extraResult" style="font-size:20px; color:#facc15; margin-top:10px;"></p>
     
     <div class="button-row act-row">
@@ -350,6 +369,16 @@
       const selected = currentQuest;
       document.getElementById("result").textContent = selected;
       */
+      
+      const monsterImage =
+        document.getElementById("monsterImage");
+
+      if (selected === "★10 ゴグマジオス") {
+        monsterImage.src = "images/gogma.png";
+        monsterImage.style.display = "block";
+      } else {
+        monsterImage.style.display = "none";
+      }
       
       document.getElementById("extraBtn").disabled = false;
       document.getElementById("shareTxtBtn").disabled = false;
