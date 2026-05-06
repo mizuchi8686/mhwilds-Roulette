@@ -151,8 +151,58 @@
       75%  { transform: translate(-1px, -1px); }
       100% { transform: translate(0px, 0px); }
     }
-
     
+    .select-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .select-area label {
+      font-size: 16px;
+      color: #ffffff;
+    }
+
+    #questMode {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+
+      padding: 10px 40px 10px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+
+      background: rgba(30, 41, 59, 0.8);
+      color: #86efac;
+
+      cursor: pointer;
+      outline: none;
+    }
+    
+    .select-area label {
+      font-size: 16px;
+      color: #facc15;
+      font-weight: bold;
+    }
+    
+    .select-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #facc15;
+      pointer-events: none;
+      font-size: 20px;
+    }
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -162,6 +212,18 @@
         <br>🍺いつもの集会所🍸️
     </h1>
     <h2>🎲ランダムクエスト🎲</h2>
+    
+    <div class="select-area">
+      <label for="questMode">クエスト範囲：</label>
+
+      <div class="select-wrapper">
+        <select id="questMode" onchange="loadQuests()">
+          <option value="all">全モンスター</option>
+          <option value="high">☆9以上のみ</option>
+        </select>
+        <span class="select-arrow">⚔</span>
+      </div>
+    </div>
 
     <div id="rareMessage" style="
       display:none;
@@ -197,47 +259,32 @@
   </div>
   
   <script>
-    const quests = [
-      "歴戦王アルシュベルド",
-      "★10 英雄の証", 
-      "☆9 ゴグマジオス", 
-      "★10 ゴグマジオス", 
-      "歴戦王ウズ・トゥナ",
-      "歴戦王レ・ダウ",
-      "歴戦王ジン・ダハド",
-      "歴戦王ヌ・エグドラ",  
-      "アンジャナフ", 
-      "零式オメガ", 
-      "ゾシア", 
-      "ケマトリス", 
-      "ゴア・マガラ",
-      "タマミツネ",
-      "ドシャグマ",
-      "バーラハーラ",
-      "ププロポル",
-      "ププロポルは泣いてない", 
-      "チャタカブラ",
-      "セルレギオス",
-      "ヒラバミ",
-      "ラギアクルス", 
-      "ババコンガ", 
-      "ドドブランゴ", 
-      "ネルスキュラ", 
-      "赤いクモ", 
-      "グラビモス", 
-      "リオレウス", 
-      "リオレイア", 
-      "おかわり", 
-      "イャンクック"
-    ];
-    const noCaptureMonsters = [
-      "★10 英雄の証",
-      "☆9 ゴグマジオス",
-      "★10 ゴグマジオス",
-      "歴戦王ジン・ダハド",
-      "零式オメガ", 
-      "ゾシア"
-    ];
+    /* 2026.05.06 追加開始 外部読込み */
+    let quests = [];
+    let noCaptureMonsters = [];
+
+    async function loadQuests() {
+      const mode =
+        document.getElementById("questMode").value;
+
+      let fileName =
+        mode === "high"
+          ? "quests_high.json"
+          : "quests_all.json";
+
+      try {
+        const response = await fetch(fileName);
+        const data = await response.json();
+
+        quests = data.quests;
+        noCaptureMonsters = data.noCapture;
+
+        console.log(`${fileName} 読み込み完了`);
+      } catch (error) {
+        console.error("読み込み失敗", error);
+      }
+    }
+    /* 2026.05.06 追加終了 */
 
     let history = [];
     const weaponTypes = ["生産武器での",""];
@@ -281,6 +328,7 @@
       document.getElementById("extraResult").textContent = "";
       document.getElementById("shareTxtBtn").disabled = true;
       document.getElementById("imageShareBtn").disabled = true;
+      document.getElementById("questMode").disabled = true;
 
       rouletteInterval = setInterval(() => {
         const random = quests[Math.floor(Math.random() * quests.length)];
@@ -306,10 +354,11 @@
       document.getElementById("extraBtn").disabled = false;
       document.getElementById("shareTxtBtn").disabled = false;
       document.getElementById("imageShareBtn").disabled = false;
+      document.getElementById("questMode").disabled = false;
 
       const resultEl = document.getElementById("result");
 
-      if (selected.includes("★10") || selected.includes("泣いてない")) {
+      if (selected.includes("★10") || selected.includes("泣いてない") || selected.includes("英雄の証")) {
         resultEl.style.color = "#facc15";
         resultEl.style.fontSize = "18px";
         document.getElementById("rareMessage").style.display = "block";
@@ -456,6 +505,8 @@
     }
     
     /* 2026.05.05 追加終了 */
+    
+    loadQuests();
     
   </script>
   </body>
