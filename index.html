@@ -282,7 +282,7 @@
       <div id="lottaMessage" class="lotta-message">
         ロッタ：クエスト受付お待ちしてます♪
       </div>
-      <img src="images/lotta_chibi.png" alt="ロッタ">
+      <img id="lottaImage" src="images/lotta_chibi.png" alt="ロッタ">
     </div>
     
     <!-- 2026.05.09 追加終了 -->
@@ -459,6 +459,19 @@
       const selected = currentQuest;
       document.getElementById("result").textContent = selected;
       */
+      
+      const lottaImage =
+  document.getElementById("lottaImage");
+
+      const rareChance = Math.random();
+
+      if (rareChance <= 0.00024) {
+        lottaImage.src = "images/lotta_chibi.png";
+        document.getElementById("lottaMessage").textContent =
+    "ロッタ？：！？ 特別な受付対応ですっ！！";
+      } else {
+        lottaImage.src = "images/lotta_chibi.png";
+      }
       
       const monsterImage =
         document.getElementById("monsterImage");
