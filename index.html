@@ -287,6 +287,16 @@
       border-color: #fff8dc transparent transparent transparent;
     }
     
+    #lottaImage {
+      width: 420px;
+      height: 240px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+    }
+    
 
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -302,7 +312,7 @@
 
     <div class="lotta-area">
       <div id="lottaMessage" class="lotta-message">
-        ロッタ：クエスト受付お待ちしてます♪
+        ロッタ：クエスト受付お待ちしてます
       </div>
       <img id="lottaImage" src="images/lotta_chibi.png" alt="ロッタ">
     </div>
@@ -364,7 +374,7 @@
   </div>
 
   <p class="version-info">
-    Monster Hunter Wilds. Random Quest @いつもの集会所 Ver 1.0.6
+    Monster Hunter Wilds. Random Quest @いつもの集会所 Ver 1.0.7
   </p>
   
   <script>
@@ -374,6 +384,26 @@
     
     let normalMessages = [];
     let rareMessages = [];
+    
+    const lottaImages = [
+      "images/lotta_chibi.png",
+      "images/lotta_tun.png",
+      "images/lotta_dere.png"
+    ];
+
+    function changeLottaImage() {
+      const img =
+        document.getElementById("lottaImage");
+
+      const randomChance = Math.random();
+
+      const randomImage =
+        lottaImages[
+          Math.floor(Math.random() * lottaImages.length)
+        ];
+
+      img.src = randomImage;
+    }
 
     async function loadQuests() {
       const mode =
@@ -560,6 +590,7 @@
         messageEl.textContent = randomMessage;
       }
       updateHistory(selected);
+      changeLottaImage();
     }
     
     function generateExtraMission() {
@@ -690,6 +721,7 @@
     /* 2026.05.05 追加終了 */
     
     loadQuests();
+    changeLottaImage();
     loadLottaMessages();
     
   </script>
