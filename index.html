@@ -364,7 +364,7 @@
   </div>
 
   <p class="version-info">
-    Monster Hunter Wilds. Random Quest @いつもの集会所 Ver 1.0.5
+    Monster Hunter Wilds. Random Quest @いつもの集会所 Ver 1.0.6
   </p>
   
   <script>
@@ -631,7 +631,6 @@
       if (navigator.share) {
         try {
           await navigator.share({
-            title: "モンハンワイルズ ランダムクエスト",
             text: shareText
           });
         } catch (error) {
@@ -676,7 +675,6 @@
             navigator.canShare({ files: [file] })
           ) {
             await navigator.share({
-              title: "モンハンワイルズ結果",
               files: [file]
             });
           } else {
