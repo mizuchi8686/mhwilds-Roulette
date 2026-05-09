@@ -236,9 +236,35 @@
     }
 
     .lotta-area img {
-      width: 300px;
+      width: 280px;
       height: auto;
     }
+    
+    .lotta-message {
+      position: relative;
+      display: inline-block;
+      background: #fff8dc;
+      color: #4a2f1b;
+      padding: 12px 16px;
+      border-radius: 15px;
+      max-width: 280px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .lotta-message::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 12px 10px 0 10px;
+      border-style: solid;
+      border-color: #fff8dc transparent transparent transparent;
+    }
+    
 
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -253,6 +279,9 @@
     <!-- 2026.05.09 追加開始 -->
 
     <div class="lotta-area">
+      <div id="lottaMessage" class="lotta-message">
+        ロッタ：クエスト受付お待ちしてます♪
+      </div>
       <img src="images/lotta_chibi.png" alt="ロッタ">
     </div>
     
@@ -320,6 +349,9 @@
     /* 2026.05.06 追加開始 外部読込み */
     let quests = [];
     let noCaptureMonsters = [];
+    
+    let normalMessages = [];
+    let rareMessages = [];
 
     async function loadQuests() {
       const mode =
@@ -343,6 +375,25 @@
       }
     }
     /* 2026.05.06 追加終了 */
+
+    /* 2026.05.09 追加開始 */
+    async function loadLottaMessages() {
+      try {
+        const response =
+          await fetch("lotta_msg.json");
+
+        const data =
+          await response.json();
+
+          normalMessages = data.normal;
+          rareMessages = data.rare;
+
+          console.log("ロッタ台詞読み込み完了");
+      } catch (error) {
+        console.error("ロッタ台詞読み込み失敗", error);
+      }
+    }
+    /* 2026.05.09 追加終了 */
 
     let history = [];
     const weaponTypes = ["生産武器での",""];
@@ -432,22 +483,46 @@
       document.getElementById("questMode").disabled = false;
 
       const resultEl = document.getElementById("result");
+      const messageEl = document.getElementById("lottaMessage");
 
-      if (selected.includes("★10") || selected.includes("泣いてない") || selected.includes("英雄の証")) {
+      if (
+        selected.includes("★10") ||
+        selected.includes("泣いてない") ||
+        selected.includes("英雄の証")
+      ) {
         resultEl.style.color = "#facc15";
         resultEl.style.fontSize = "18px";
+
         document.getElementById("rareMessage").style.display = "block";
+
         document.body.classList.remove("flash");
-        void document.body.offsetWidth
+        void document.body.offsetWidth;
         document.body.classList.add("flash");
+
         setTimeout(() => {
           document.body.classList.remove("flash");
         }, 3000);
+
+        const randomMessage =
+          rareMessages[
+            Math.floor(Math.random() * rareMessages.length)
+          ];
+
+        messageEl.textContent = randomMessage;
+
       } else {
         resultEl.style.color = "#86efac";
         resultEl.style.fontSize = "18px";
+
         document.getElementById("rareMessage").style.display = "none";
         document.body.classList.remove("flash");
+
+        const randomMessage =
+          normalMessages[
+            Math.floor(Math.random() * normalMessages.length)
+          ];
+
+        messageEl.textContent = randomMessage;
       }
       updateHistory(selected);
     }
@@ -582,6 +657,7 @@
     /* 2026.05.05 追加終了 */
     
     loadQuests();
+    loadLottaMessages();
     
   </script>
   
